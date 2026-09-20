@@ -1,0 +1,34 @@
+<dialog #dialog class="book-detail-dialog" aria-labelledby="book-detail-title" (close)="onClosed()">
+  <button
+    class="book-detail-dialog__close"
+    type="button"
+    autofocus
+    aria-label="Close book details"
+    (click)="close()"
+  ></button>
+  <div class="book-detail-dialog__content">
+    @if (book().coverId && !coverUnavailable()) {
+      <img
+        class="book-detail-dialog__cover"
+        [src]="'https://covers.openlibrary.org/b/id/' + book().coverId + '-L.jpg'"
+        [alt]="'Cover of ' + book().title"
+        (error)="markCoverUnavailable()"
+      />
+    } @else {
+      <div class="book-detail-dialog__cover book-detail-dialog__cover--empty" aria-hidden="true">
+        No cover
+      </div>
+    }
+    <div class="book-detail-dialog__details">
+      <p class="book-detail-dialog__eyebrow">Book details</p>
+      <h2 id="book-detail-title">{{ book().title }}</h2>
+      <p class="book-detail-dialog__authors">{{ book().authors.join(', ') || 'Unknown author' }}</p>
+      <dl class="book-detail-dialog__metadata">
+        <dt>First published</dt>
+        <dd>{{ book().firstPublishYear ?? 'Unknown year' }}</dd>
+        <dt>Open Library ID</dt>
+        <dd>{{ book().id }}</dd>
+      </dl>
+    </div>
+  </div>
+</dialog>

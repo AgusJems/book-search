@@ -1,0 +1,214 @@
+:host {
+  display: block;
+}
+.book-search {
+  max-width: 90rem;
+  margin-inline: auto;
+  padding: 0 2rem 5rem;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.navbar__brand {
+  color: var(--color-primary);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+.navbar__source {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+.hero {
+  position: relative;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: clamp(4rem, 8vw, 6.5rem) 0 3rem;
+  text-align: center;
+}
+.hero::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 50%;
+  width: min(45rem, 100vw);
+  height: 26rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(249 115 22 / 18%), transparent 68%);
+  content: '';
+  filter: blur(1rem);
+  transform: translate(-50%, -30%);
+}
+.hero__eyebrow,
+.search-results__eyebrow {
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(3rem, 7vw, 5.25rem);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 0.98;
+}
+.hero__description {
+  max-width: 38rem;
+  margin-top: 1.25rem;
+  margin-inline: auto;
+  color: var(--color-muted);
+  font-size: 1.125rem;
+}
+.search-field {
+  position: relative;
+  margin-top: 2.25rem;
+}
+.search-field input {
+  width: 100%;
+  min-height: 4.25rem;
+  padding: 0.875rem 1.25rem 0.875rem 3.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 20%);
+}
+.search-field input:focus {
+  border-color: var(--color-primary);
+  box-shadow:
+    0 0 0 4px rgb(249 115 22 / 18%),
+    0 1rem 2.5rem rgb(0 0 0 / 20%);
+  outline: none;
+}
+.search-field__icon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 1.25rem;
+  color: var(--color-muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-55%) rotate(-20deg);
+}
+.search-field__hint {
+  margin-top: 0.625rem;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+}
+.search-status {
+  color: var(--color-muted);
+  text-align: center;
+}
+.search-status__error {
+  color: var(--color-error);
+}
+.search-status__retry {
+  margin-top: 0.75rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.search-status__retry:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.search-results {
+  margin-top: 4rem;
+}
+.search-results__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.search-results__heading h2 {
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  letter-spacing: -0.04em;
+}
+.search-results__heading > p {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.5rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.load-more button {
+  min-width: 9rem;
+  min-height: 2.9rem;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 700;
+}
+.load-more button:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-surface-hover);
+}
+.load-more button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+@media (max-width: 60rem) {
+  .book-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 45rem) {
+  .book-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 30rem) {
+  .book-search {
+    padding-inline: 1rem;
+  }
+  .navbar {
+    min-height: 4.5rem;
+  }
+  .hero {
+    padding-top: 4.25rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 15vw, 4rem);
+  }
+  .hero__description {
+    font-size: 1rem;
+  }
+  .search-results {
+    margin-top: 3rem;
+  }
+  .search-results__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .book-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 0.75rem;
+  }
+}

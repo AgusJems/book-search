@@ -1,0 +1,39 @@
+@let currentBook = book();
+
+<article>
+  <button
+    type="button"
+    class="book-card"
+    [attr.aria-label]="'View details for ' + currentBook.title"
+    (click)="selectBook()">
+    <span class="book-card__cover-wrap">
+      @if (currentBook.coverId && !coverUnavailable()) {
+      <img
+        class="book-card__cover"
+        [src]="'https://covers.openlibrary.org/b/id/' + currentBook.coverId + '-M.jpg'"
+        [alt]="'Cover of ' + currentBook.title"
+        loading="lazy"
+        (error)="markCoverUnavailable()" />
+      } @else {
+      <span
+        class="book-card__cover book-card__cover--empty"
+        aria-hidden="true">
+        <span class="book-card__placeholder-icon">✦</span>
+        <span>No cover</span>
+      </span>
+      }
+    </span>
+
+    <span class="book-card__title">
+      {{ currentBook.title }}
+    </span>
+
+    <span class="book-card__authors">
+      {{ currentBook.authors.join(', ') || 'Unknown author' }}
+    </span>
+
+    <span class="book-card__year">
+      {{ currentBook.firstPublishYear ?? 'Unknown year' }}
+    </span>
+  </button>
+</article>

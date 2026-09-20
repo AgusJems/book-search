@@ -1,0 +1,82 @@
+<div class="book-search">
+  <header class="navbar">
+    <a class="navbar__brand" href="/">Agus' Shelf</a>
+    <span class="navbar__source">Open Library catalog</span>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="search-title">
+      <p class="hero__eyebrow">Search the Open Library catalog</p>
+      <h1 id="search-title">Find a book worth<br />getting lost in.</h1>
+      <p class="hero__description">
+        Search the Open Library catalog and discover your next great read.
+      </p>
+
+      <div class="search-field">
+        <label class="sr-only" for="book-query">Search books</label>
+        <span class="search-field__icon" aria-hidden="true">⌕</span>
+        <input
+          id="book-query"
+          type="search"
+          placeholder="Search books..."
+          autocomplete="off"
+          aria-describedby="search-hint"
+          [formControl]="searchControl"
+        />
+      </div>
+      <p id="search-hint" class="search-field__hint">Results appear as you type.</p>
+    </section>
+
+    @let state = searchState();
+    <div class="search-status" role="status" aria-live="polite">
+      @if (state.status === 'idle') {
+      @if (activeQuery().length > 0 && activeQuery().length < minQueryLength) {
+          <p>Enter at least 3 characters to search.</p>
+        } @else {
+          <p>Start typing to search for a book.</p>
+        }
+      } @else if (state.status === 'loading') {
+        <p>Searching the shelves...</p>
+      } @else if (state.status === 'success') {
+        @if (state.books.length === 0) {
+          <p>No books found. Try a different search.</p>
+        }
+      } @else {
+        <p class="search-status__error">{{ state.message }}</p>
+        <button type="button" class="search-status__retry" (click)="retrySearch()">
+          Try again
+        </button>
+      }
+    </div>
+
+    @if (state.status === 'success' && state.books.length > 0) {
+      <section class="search-results" id="browse" aria-labelledby="results-title">
+        <div class="search-results__heading">
+          <div>
+            <p class="search-results__eyebrow">Your search</p>
+            <h2 id="results-title">Results for “{{ activeQuery() }}”</h2>
+          </div>
+          <p>{{ state.total.toLocaleString() }} books found</p>
+        </div>
+        <ul class="book-list">
+          @for (book of state.books; track book.id) {
+            <li class="book-list__item">
+              <app-book-card [book]="book" (bookSelected)="selectBook($event)" />
+            </li>
+          }
+        </ul>
+        @if (hasMore()) {
+          <div class="load-more">
+            <button type="button" (click)="loadMore()" [disabled]="loadingMore()">
+              {{ loadingMore() ? 'Loading...' : 'Load more' }}
+            </button>
+          </div>
+        }
+      </section>
+    }
+  </main>
+</div>
+
+@if (selectedBook(); as book) {
+  <app-book-detail-dialog [book]="book" (dismissed)="closeBookDetail()" />
+}
